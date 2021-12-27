@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CalculatorTests {
 
-    @get:Rule()
+    @get:Rule
     val activity = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
@@ -50,5 +50,21 @@ class CalculatorTests {
 
         onView(withId(R.id.tip_result))
             .check(matches(withText(containsString("9.00"))))
+    }
+
+    @Test
+    fun calculate_15_percent_tip() {
+        onView(withId(R.id.cost_of_service_edit_text))
+            .perform(typeText("50.00"), closeSoftKeyboard())
+
+
+        onView(withId(R.id.option_fifteen_percent))
+            .perform(click())
+
+        onView(withId(R.id.calculate_button))
+            .perform(click())
+
+        onView(withId(R.id.tip_result))
+            .check(matches(withText(containsString("8.00"))))
     }
 }
